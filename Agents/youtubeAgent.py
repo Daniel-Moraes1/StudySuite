@@ -19,8 +19,7 @@ async def interval_task(ctx: Context):
 
 @yt.on_message(Message)
 async def handle_message(ctx: Context, sender: str, url: Message):
-    ctx.logger.info(f"Received incoming request")
-    response = requests.get(url)
+    transcript = getTranscript(url)
     ctx.logger.info(f"Got message from {sender}: {url}")
 
     
