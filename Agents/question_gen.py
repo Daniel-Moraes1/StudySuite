@@ -46,11 +46,27 @@ def createQuiz(transcript: str):
         {"role": "system", "content": "You are a question generator AI. Don't generate a question if it's not necessary. "},
         {"role": "user", "content": prompt}
     ],
-    max_tokens=1000,
+    max_tokens=1500,
     )
 
     return response.choices[0].message.content
 
+# a question generator that lazy loads. Call next on a gnerator to get the question
+def quiz_generator(transcripts: list[str]):
+    i = 0
+    while i < len(transcripts):
+        transcript = ' '.join([d['text'] for d in transcripts[i:i+9]])
+        transcript = transcript.replace("\n", " ")
+        # print(transcript)
+        quiz = createQuiz(transcript)[7:-3]
+        # print(quiz)
+        testObj = json.loads(quiz)
+        
+        yield testObj  # This yields control back to the caller, resuming from here when next() is called again.
+        i += 9
+
+def get_next_question(question_gen):
+    return next(question_gen)
 
 def main():
     # VIDEO about productivity
@@ -58,21 +74,10 @@ def main():
 
     # VIDEO about ai video
     url2 = "https://youtu.be/NXpdyAWLDas?si=AMRXgzlvinyFApKI"
-    transcripts = getTranscript(url2)
+    transcripts = getTranscript(url1)
     # we loop every 10 transcript to create a quiz
-    quizs = []
-    i = 0
-    while i < len(transcripts):
-        transcript = ' '.join([d['text'] for d in transcripts[i:i+10]])
-        transcript = transcript.replace("\n", " ")
-        quiz = createQuiz(transcript)[7:-3]
-        testObj = json.loads(quiz)
-        
-        print(f"This is the question: {testObj['question']}")
-        print(f"These are the options: {testObj['options']}")
-        print(f"This is the answer: {testObj['answer_index']}")
-        quizs.append(testObj)
-        i += 10
+    quizzes = quiz_generator(transcripts)  # This creates a generator object but doesn't start the function yet.
+    print(get_next_question(quizzes))
 
     return 0
 
