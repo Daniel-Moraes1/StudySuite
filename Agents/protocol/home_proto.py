@@ -1,7 +1,6 @@
 from uagents import Agent, Context, Protocol, Model
 from ai_engine import UAgentResponse, UAgentResponseType
-from models import Empty
-
+from Agents.protocol import Empty
 home_proto= Protocol("", version="0.1")
 
 @home_proto.on_event("startup")
