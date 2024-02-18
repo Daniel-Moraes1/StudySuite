@@ -1,6 +1,5 @@
 from typing import List
 from uagents import Context, Model, Protocol
-from .models import Provider, Availability, User
 
 class summaryRequest(Model):
     url: str

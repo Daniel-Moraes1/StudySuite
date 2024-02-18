@@ -1,8 +1,27 @@
 from uagents import Agent, Context, Protocol, Model
 from ai_engine import UAgentResponse, UAgentResponseType
-
+from models import Empty
 
 home_proto= Protocol("", version="0.1")
+
+@home_proto.on_event("startup")
+async def welcome(ctx: Context):
+    ctx.logger.info(f"Welcome to {ctx.name}! My purpose is to help you study.")
+    ctx.logger.info(f"Currently, you can generate quizzes and summaries from videos to check and improve your understanding!")
+    ctx.logger.info(f"Would you like to start by generating a quiz or a summary?")
+
+@home_proto.on_message(model=Empty)
+async def welcome(ctx: Context, sender: str, req:Empty):
+    try: 
+        await ctx.send("Welcome to {ctx.name}! My purpose is to help you study.\nCurrently, you can generate quizzes and summaries from videos to check and improve your understanding!\n")
+    except Exception as exc:
+        ctx.logger.error(exc)
+        await ctx.send(
+            sender, UAgentResponse(
+                message=str(exc), 
+                type=UAgentResponseType.ERROR
+            )
+        )
 
 @home_proto.on_message(model=QuizParams, replies={UAgentResponse})
 async def handle_generate_quiz(ctx: Context, sender: str, req:QuizParams):
