@@ -1,9 +1,6 @@
 from uagents import Agent, Context, Protocol, Model
 from ai_engine import UAgentResponse, UAgentResponseType
-
-class QuizParams(Model):
-    questions: str
-    answers: str
+from .protocol_models import QuizParams
 
 grader_proto = Protocol("Quiz Generator", version="0.1")
 
