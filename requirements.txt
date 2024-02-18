@@ -1,2 +1,3 @@
 youtube-transcript-api
 uagents
+uagents-ai-engine
