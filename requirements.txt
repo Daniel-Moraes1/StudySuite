@@ -1,3 +1,5 @@
 youtube-transcript-api
 uagents
 uagents-ai-engine
+parse_qs
+urlparse
