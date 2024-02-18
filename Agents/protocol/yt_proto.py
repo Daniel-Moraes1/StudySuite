@@ -24,12 +24,10 @@ async def handle_message(ctx: Context, sender: str, msg: Message):
         transcript = getTranscript(msg.string_field)
         print(transcript)
         ctx.logger.info(f"Got message from {sender}: {msg.string_field}")
-        # if response.status_code == 200:
-        #     ctx.logger.info(f"Got message from {sender}: {url}")
         await ctx.send(
             sender,
             UAgentResponse(
-                message=transcript, 
+                message=transcript,
                 type=UAgentResponseType.FINAL
             ),
         )

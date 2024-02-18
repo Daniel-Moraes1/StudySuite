@@ -20,8 +20,9 @@ async def handle_generate_quiz(ctx: Context, sender: str, req:QuizParams):
         await ctx.send(
             sender,
             UAgentResponse(
+                options=[],
                 message=student_grade, 
-                type=UAgentResponseType.FINAL
+                type=UAgentResponseType.SELECT_FROM_OPTIONS
             ),
         )
     except Exception as exc:
