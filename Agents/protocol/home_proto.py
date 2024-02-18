@@ -2,8 +2,12 @@ from uagents import Agent, Context, Protocol, Model
 from ai_engine import UAgentResponse, UAgentResponseType
 from .protocol_models import Empty, QuizParams
 
-def grade_answers(questions, answers):
-    pass
+def grade_answers(answers, responses):
+    wrong = 0
+    for i in range(len(answers)):
+        if answers[i] != responses[i]:
+            wrong+=1
+    return round((len(answers) - wrong)/len(answers)*100, 2)
 
 home_proto = Protocol("Study Suite Welcome", version="0.1")
 
