@@ -8,7 +8,7 @@ grader = Agent(name="Quiz Grader",
             seed="Quiz Grader Agent",
             mailbox=f"{AGENT_MAILBOX_KEY}@https://agentverse.ai",
             port=8001,
-            endpoint=["http://localhost:8001/submit"])
+            endpoint=["http://localhost:8001/grader"])
 
 print(f"agent name and addres: {grader.name} at {grader.address}")
 
