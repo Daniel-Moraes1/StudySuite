@@ -68,6 +68,19 @@ def quiz_generator(transcripts: list[str]):
 def get_next_question(question_gen):
     return next(question_gen)
 
+# 
+def get_summarized_text(transcripts):
+    i = 0
+    while i < len(transcripts):
+        transcript = ' '.join([d['text'] for d in transcripts[i:i+9]])
+        transcript = transcript.replace("\n", " ")
+        # print(transcript)
+        quiz = createQuiz(transcript)[7:-3]
+        # print(quiz)
+        testObj = json.loads(quiz)
+        
+        yield testObj  # This yields control back to the caller, resuming from here when next() is called again.
+        i += 9
 def main():
     # VIDEO about productivity
     url1 = "https://youtu.be/0CmtDk-joT4?si=q5AMUjRgaD37Xgnm"
